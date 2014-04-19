@@ -1,6 +1,7 @@
 package it.simple.web_crawler;
 
 
+import it.simple.web_crawler.interfaces.ICurtesyTime;
 import it.simple.web_crawler.interfaces.IUrlFilter;
 import it.simple.web_crawler.listener.PageDownloadedListener;
 import it.simple.web_crawler.listener.PageVisitedListener;
@@ -29,6 +30,7 @@ public class WebCrawler {
 	JSoupWrapper mJSoupWrapper = null;
 	
 	ArrayList<IUrlFilter> filters = null;
+	ICurtesyTime curtesyTime = null;
 	
 	public WebCrawler()
 	{
@@ -98,6 +100,10 @@ public class WebCrawler {
 					ioe.printStackTrace();
 				}
 			}
+			
+			if (this.curtesyTime != null)
+				this.curtesyTime.waitCurtesyTime();
+			
 		} while (this.mPagesQueue.isEmpty() == false);
 	}
 	
@@ -167,5 +173,15 @@ public class WebCrawler {
 				return true;
 		
 		return false;
+	}
+	
+	public void setCurtesyTime(ICurtesyTime t)
+	{
+		this.curtesyTime = t;
+	}
+	
+	public void clearCurtesyTime()
+	{
+		this.curtesyTime = null;
 	}
 }
